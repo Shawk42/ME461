@@ -2,6 +2,7 @@ import numpy as np
 import numpy.random as rand
 from prettytable import PrettyTable
 import matplotlib.pyplot as plt
+from scipy import stats
 
 """ Givens """
 # Material A
@@ -29,7 +30,7 @@ Kload = 0.8
 Ksurf = 0.6
 
 # Material B - rotating bending
-#Ksize = 0.8  # Max modification is 0.8 @ 50 mm (2 in = 50.8mm)
+#Ksize = 0.7
 #Kload = 1
 #Ksurf = 0.9
 
@@ -37,9 +38,9 @@ Ksurf = 0.6
 #Ksize = 1
 #Kload = 0.8
 #Ksurf = 0.15
-"""Material D is wrong"""
+
 # Material D - rotating bending
-#Ksize = 1
+#Ksize = 1  #As d = 10mm and the cutoff is 10mm, the size factor is being treated as 1
 #Kload = 1
 #Ksurf = 0.9
 
@@ -60,9 +61,9 @@ inter = PrettyTable(["Variable", "Value", "Units"])
 inter.add_row(["Nf", Nf, "Cycles"])
 inter.add_row(["Sf (Unmodified)", Sf_unmod, "Mpa"])
 inter.add_row(["Sf (Verification)", Sf_check, ""])
-print("Intermediate Outputs")
-print(inter)
-print("")
+# print("Intermediate Outputs")
+# print(inter)
+# print("")
 
 """Solution"""
 sol = PrettyTable(["Material","Variable", "Value", "Units"])
@@ -70,9 +71,9 @@ sol.add_row(["A", "Sf", 120, "MPa"])
 sol.add_row(["A","A", 500, "MPa"])
 sol.add_row(["A","B", -0.1, ""])
 
-sol.add_row(["B", "Sf", 36, "ksi"])
+sol.add_row(["B", "Sf", 31, "ksi"])
 sol.add_row(["B","A", 100, "ksi"])
-sol.add_row(["B","B", -0.07, ""])
+sol.add_row(["B","B", -0.08, ""])
 
 sol.add_row(["C", "Sf", 12, "ksi"])
 sol.add_row(["C","A", 280, "ksi"])
@@ -90,17 +91,18 @@ livelink = PrettyTable(["Material","Variable", "Value", "Units"])
 livelink.add_row(["", "Sf", Sf, ""])
 livelink.add_row(["","A", A, ""])
 livelink.add_row(["","B", B, ""])
-print("Live Output")
-print(livelink)
+#print("Live Output")
+#print(livelink)
 
 """Coefficent Table"""
 coeff = PrettyTable(["Material","Su","d","Ksize","Kload","Ksurf"])
-coeff.add_row("A","500","5",1,0.8,0.6)
-coeff.add_row("B","100","2",0.8,1,0.9)
-coeff.add_row("C","20","0.25",1,0.8,0.15)
-coeff.add_row("D","500","5",1,0.8,0.6)
+coeff.add_row(["A","500","5",1,0.8,0.6])
+coeff.add_row(["B","100","2",0.8,1,0.9])
+coeff.add_row(["C","20","0.25",1,0.8,0.15])
+coeff.add_row(["D","500","5",1,1,0.9])
 
-
+print("Table of coefficents used")
+print(coeff)
 
 
 """
@@ -120,12 +122,14 @@ Ksurf = rand.triangular(0.55, 0.6, 0.65, 250)
 Sf = Ksize * Kload * Ksurf * Sf_unmod
 
 Sf_mean = round(np.mean(Sf), 2)
-ST_std = round(np.std(Sf), 2)
+Sf_std = round(np.std(Sf), 2)
+Sf_CI = stats.norm.interval(0.95,loc = Sf_mean, scale = Sf_std)
 
 print("")
 print("Monte Carlo Simulation Output")
 print("Mean", Sf_mean)
-print("Standard Deviation",ST_std)
+print("Standard Deviation",Sf_std)
+print("Confidence Interval",Sf_CI)
 
 
 plt.hist(Sf, rwidth= 0.8, align= 'mid')
@@ -136,12 +140,8 @@ plt.show()
 """
 Results 
 
-I need more practice with Monte Carlo simulations outside of Excel. 
-The resulting distribution looks somewhat normal. The average of 112, and a standard 
-deviation of 5 means that the ordinal solution may be an overestimation of the life at 
-10^6 cycles. However, uniform and triangular distributions may not capture the true spread
-of the fundamental data.
-
+A rough result of the Monte Carlo simulation shows that the resulting distribution is normal.
+The unverified 95% confidence interval is 100 to 123, which contains the orginal solution.
 """
 
 
