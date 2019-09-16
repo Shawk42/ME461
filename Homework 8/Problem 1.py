@@ -37,7 +37,7 @@ Ksurf = 0.6
 #Ksize = 1
 #Kload = 0.8
 #Ksurf = 0.15
-
+"""Material D is wrong"""
 # Material D - rotating bending
 #Ksize = 1
 #Kload = 1
@@ -92,6 +92,16 @@ livelink.add_row(["","A", A, ""])
 livelink.add_row(["","B", B, ""])
 print("Live Output")
 print(livelink)
+
+"""Coefficent Table"""
+coeff = PrettyTable(["Material","Su","d","Ksize","Kload","Ksurf"])
+coeff.add_row("A","500","5",1,0.8,0.6)
+coeff.add_row("B","100","2",0.8,1,0.9)
+coeff.add_row("C","20","0.25",1,0.8,0.15)
+coeff.add_row("D","500","5",1,0.8,0.6)
+
+
+
 
 """
 Monte Carlo Simulation
