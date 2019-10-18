@@ -112,7 +112,7 @@ I am curious into the results of varying the range of acceptable values in this 
 Material A will be used for these simulations
 
 Kload will vary uniformly between 0.7 and 0.8
-Ksurf will vary with a triangular distribution centered at 0.6, lower bound of 0.55, upper bound of 0.65
+Ksurf will vary with a triangular distributimongon centered at 0.6, lower bound of 0.55, upper bound of 0.65
 """
 
 Ksize = np.ones(250)
