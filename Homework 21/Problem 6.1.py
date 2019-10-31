@@ -7,7 +7,7 @@ For the given geometry of an edge crack of length a (6mm or 30mm) find K_I
 """
 
 """GIVEN"""
-w = 100  # mm
+w = 120  # mm
 B = 10  # mm
 a = 6  # mm
 P = 100  # kN
@@ -21,7 +21,7 @@ P = P * 1000
 """Tension"""
 aw = a / w
 print("A/W = ", aw)
-Y_ten = float(input("What is Y value for a = 30mm "))  # 2
+Y_ten = float(input("What is Y value for a = 6mm "))  # 2
 qq = (P * a**(1/2))/(B * w)
 K_I_ten = Y_ten * qq
 
