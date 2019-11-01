@@ -57,6 +57,7 @@ print("ee", ee)
 """Superposition"""
 K_I = K_I_ben + K_I_ten
 
+K_I = K_I * (10**-6)
 
 """Table Output"""
 
@@ -65,12 +66,11 @@ print("")
 tab = PrettyTable()
 tab.field_names = ["Variable", "Value", "Units", "Value Type"]
 tab.add_row(["a/W", aw, "dim", "Intermediate"])
-tab.add_row(["K_I_ten", K_I_ten, "UNITS", "Intermediate" ])
+tab.add_row(["K_I_ten", K_I_ten, "Pa*(M^0.5)", "Intermediate" ])
 tab.add_row(["M", M, "N - m", "Intermediate"])
-tab.add_row(["K_I_ben", K_I_ben, "UNITS", "Intermediate"])
-tab.add_row(["K_I", K_I,"UNITS","Solution Array"])
-tab.add_row(["K_I (a = 6mm)", round(K_I.item(0),2), "UNITS", "SOLUTION"])
-tab.add_row(["K_I (a = 30mm)", round(K_I.item(1),2), "UNITS", "SOLUTION"])
-
+tab.add_row(["K_I_ben", K_I_ben, "Pa*(M^0.5)", "Intermediate"])
+tab.add_row(["K_I", K_I,"MPa*(M^0.5)","Solution Array"])
+tab.add_row(["K_I (a = 6mm)", round(K_I.item(0),1), "MPa*(M^0.5)", "SOLUTION"])
+tab.add_row(["K_I (a = 30mm)", round(K_I.item(1),1), "MPa*(M^0.5)", "SOLUTION"])
 
 print(tab)
